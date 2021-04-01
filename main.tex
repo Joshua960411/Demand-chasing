@@ -1,0 +1,114 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{amsmath,amsfonts}
+\usepackage{biblatex}
+\addbibresource{ref.bib}
+\usepackage{booktabs}
+\usepackage[font=normalsize]{caption}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[ignoreunlbld]{refcheck}
+\usepackage{longtable}
+\setkeys{Gin}{width=.8\textwidth}
+\usepackage{nicefrac}
+\usepackage{subcaption}
+
+\font\Bbb=msbm10 at 11pt
+\def\QQ{\mbox{\Bbb Q}}
+\def\RR{\mbox{\Bbb R}}
+
+\graphicspath{ {./images/} }
+
+
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{theorem}{Theorem}
+
+\newenvironment{proof}
+{\begin{trivlist} \item[] {\bf Proof.\ }}{\hfill$\Box$ \end{trivlist}}
+
+\DeclareMathOperator{\E}{\mathbb{E}}
+
+\title{The Impact of Model Misspecification on Judgemental Newsvendor Decisions}
+
+\author{Congzheng Liu\thanks{Department of Management Science,
+Lancaster University, Lancaster LA1 4YX, UK.
+Email: {\tt \{c.liu19,a.n.letchford,i.svetunkov\}@lancaster.ac.uk}}
+\and Adam N.\ Letchford$^*$ \and Ivan Svetunkov$^*$} % end author list
+
+\date{Draft, 24th March 2021}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Existing research on newsvendor decisions have asserted that individuals engage in judgemental adjustment in decision making, such as demand chasing, adjusting their order quantities towards prior demand, and pull-to-centre, adjusting their order quantities towards mean demand. Several metrics have been used to identify the possible damage on expected profit caused by these judgemental adjustment. However, the conclusions from literature are drawn based on the assumption of correct model specification. In this paper, we examine the effect of these judgemental adjustment again on a more realistic case, where the correctness of specification is not assured. 
+\\*[2mm]
+{\bf Keywords:} model misspecification; newsvendor; judgemental adjustment; demand chasing; pull-to-centre effect
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+Newsvendor problems (NVPs) have always been considered as an important part in the Operational Research.
+In NVPs, a decision maker sells a product during a given period with stochastic demand.
+The decision maker has one opportunity to order inventory before the period, and no further replenishment is possible. In choosing an order quantity, the
+decision maker must balance the profit loss of ordering too few against the profit loss of ordering too many. The expected profit-maximising order quantity can be easily solved with textbook formula \cite{AHM51}, and it is very obvious that any other adjustments to the order quantity will lead to profit loss.
+
+However, Fisher and Raman \cite{FR96} provide some evidence indicating that managers’ decisions do not correspond to the expected profit-maximising order quantity in reality. They found that managers judgmentally adjust their quantities to a systematically lower level than their algorithm’s recommendations. Schweitzer and Cachon \cite{SC00} also suggest that the decision makers often suffer from the anchoring and insufficient adjustment bias, and fail to make the rational decision. They found that the decision makers order too few of high-profit products and too many of low-profit products in their lab experiment. They also gave some explanation for the existence of the judgemental adjustment. Other experiments and possible reasons for judgemental adjustment can be found in \cite{S08,CLP15,FKZ11}.
+
+Nevertheless, it is worth noticing that no literature has taken the possibility of model incorrectness into consideration. In their experiment settings, it is assumed that the demand model is always correctly specified. Therefore, any adjustments from the expected profit-maximising order quantity are injurious. Yet, the correctness is not always assured in reality. Researches suggest that most experienced decision makers believe their judgemental adjustment on the order quantity is necessary due to the possibility of demand model misspecification \cite{BDC92}.
+
+In our paper, we examine the effect of the judgemental adjustment again when the correctness of demand model is not assured. Therefore, we should be able to answer the question:\\
+\emph{Whether the judgemental adjustment on expected profit-maximising order quantity is helpful when the demand model is misspecified?}\\
+In the experiment, we consider two widely studied ways of judgmentally adjustment \cite{BCPS08,BHS08,ZS19}: (1) adjusting toward the mean demand, and (2) adjusting toward the demand level of the immediately preceding period.
+
+The paper is organised as follows. In Section \ref{se:lit}, we review the relevant literature.   In Section \ref{se:exp}, we  demonstrate the experiment settings and assumptions. In Section 4, we present and discuss the experiment results. We finish the paper with some concluding remarks in Section 5.
+
+\section{Literature Review}
+\label{se:lit}
+We now briefly review the relevant literature. We cover newsvendor problems in Subsection \ref{sub:lit1}, demand chasing in Subsection \ref{sub:lit2}. Subsection  \ref{sub:lit3} covers the pull-to-centre effect.
+
+\subsection{Newsvendor problem} \label{sub:lit1}
+
+\emph{Newsvendor problem} (NVP) is a classic topic in the literature on inventory control (see, e.g., \cite{Ch12,HW63}). The simplest NVP considers a single product in a single planning period. The demand for the product over the period is a random variable $\tilde d$. The decision maker has one opportunity to determine the order quantity $x$ before the period. The product is assumed to be ordered with unit price $v$ and sold with unit price $p$. If $x$ exceeds the realised demand, an holding cost $c^h$ is incurred per unit of excess stock. If however $x$ is less than the demand, an shortage cost $c^s$ is incurred per unit of unsatisfied demand. The problem is to maximise sum of expected profit. It is common to call $c_u = p-v+c_s$ the \emph{underage} cost and $c_o = v+c_h$ the \emph{overage} cost. The textbook solution to this is \cite{Ch12}:
+\[
+    x^* = F^{-1}\left( \frac{c^u}{c^o+c^u} \right),
+\]
+where $F$ is the cumulative distribution function for $\tilde d$. In practice, we usually use fine estimation $\hat{d}$ to replace $\tilde{d}$.
+
+\subsection{Demand chasing}
+\label{sub:lit2}
+
+\emph{Demand chasing} effect, in the NVPs context, describes a phenomenon that decision makers tend to adjust their order decision toward the realised demand in period operating period. It takes form
+\[
+    x_t = x_t^* + \beta (d_{t-1}-x_{t-1}),
+\]
+where $x_t^*$ is the expected profit-maximising order quantity suggested by algorithm, $d_{t-1}$ is the realised demand in previous period, and $\beta$ is the demand chasing parameter.
+
+In the work of Benzion et al \cite{BCPS08}, their lab experiment suggests that the decision makers tend to increase their order quantities if previous demand surplus, and tend to decrease their order quantities if previous supply surplus. 
+
+One possible reason for demand chasing is provided by the \emph{Minimising Ex-Post Inventory Error} preference theory \cite{SC00}, which takes the decision makers' regret or disappointment from not choosing the ex-post optimal order quantity into account. Therefore, decision makers with such preference will always adjust their order quantity base on previous realisation. 
+
+The phenomenon can also be explained by Prospect Theory \cite{KT79}. We omit details here.
+
+\subsection{Pull-to-centre effect}
+\label{sub:lit3}
+
+The \emph{pull-to-effect} effect, also known as mean anchor heuristic, describes a phenomenon that the decision maker anchors on mean demand adjusts the order quantity toward it. It can be expressed as:
+\[
+    x_t = (1-\gamma) x_t^* + \gamma \hat{\mu}_t,
+\]
+where $\hat{\mu}_t$ is the fine estimation of mean demand for given period, and $\gamma$ is the pull-to-centre parameter. Evidences are provided that both $\beta$ and $\gamma$ are affected by decision maker's characters (e.g., gender, nationality, religion) \cite{FKZ11}.
+
+The experiment provided by Benzion et al \cite{BCPS08} suggests that in the first round of experiment, decision makers tend to be more biased toward the mean demand than in the last round. It shows that the anchoring behaviour can be weaken by continuous training. In later works by Bostian et al \cite{BHS08} and Bolton\cite{BK08}, the effect of training is further studied.
+
+\section{Experiments}
+\label{se:exp}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography
+\end{document}
